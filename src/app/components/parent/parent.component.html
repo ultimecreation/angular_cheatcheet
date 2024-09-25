@@ -1,0 +1,17 @@
+<div style="background-color: burlywood">
+  <h1>Parent Component</h1>
+  <p>{{ dataFromChild }}</p>
+
+  <h2>Data accessed trough child view</h2>
+  <p>{{ dataAccessedByParentThroughViewChild }}</p>
+
+  <button (click)="login()">log user in</button>
+  <button (click)="logout()">log user out</button>
+  <div style="display: flex">
+    <app-child
+      [dataFromParent]="dataFromParent"
+      (dataFromChildEvent)="handleDataFromChild($event)"
+    ></app-child>
+    <app-child-sibling></app-child-sibling>
+  </div>
+</div>
