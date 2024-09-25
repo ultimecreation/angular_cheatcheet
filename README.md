@@ -4,22 +4,23 @@
 
 - in Parent Component
 
-` @Component({
-selector: 'app-parent',
-standalone: true,
-imports: [ChildComponent],
-templateUrl: '
-
-<div style="background-color: burlywood">
-    <h1>Parent Component</h1>
-    <app-child [dataFromParent]="dataFromParent"> </app-child>
-</div>
-'
-})
+```
+@Component({
+    selector: 'app-parent',
+    standalone: true,
+    imports: [ChildComponent],
+    templateUrl: '
+    
+    <div style="background-color: burlywood">
+        <h1>Parent Component</h1>
+        <app-child [dataFromParent]="dataFromParent"> </app-child>
+    </div>
+    '
+    })
 export class ParentComponent {
     protected dataFromParent: string = "I'm a Data from parent and displayed in child"
 }
-`
+```
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
