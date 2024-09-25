@@ -66,6 +66,8 @@ export class ChildComponent implements OnInit {
   <div>
       <h1>Parent Component</h1>
       <p>{{ dataFromChild }}</p>
+
+      <app-child (dataFromChildEvent)="handleDataFromChild($event)"> </app-child>
   </div>
 '
 })
