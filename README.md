@@ -8,7 +8,7 @@
   standalone: true,
   imports: [ChildComponent],
   templateUrl: '
-  <div style="background-color: burlywood">
+  <div>
       <h1>Parent Component</h1>
       <app-child [dataFromParent]="dataFromParent"> </app-child>
   </div>
