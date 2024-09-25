@@ -18,28 +18,64 @@
 export class ParentComponent {
   protected dataFromParent: string = "I'm a Data from parent and displayed in child"
 }
+
+
+@Component({
+    selector: 'app-child',
+    standalone: true,
+    imports: [],
+    templateUrl: '
+<div>
+  <h2>Child</h2>
+  <p>{{ dataFromParent }}</p>'
+})
+export class ChildComponent implements OnInit {
+    @Input() dataFromParent: string = ''
 ```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## From child to Parent
 
-## Code scaffolding
+```
+@Component({
+    selector: 'app-child',
+    standalone: true,
+    imports: [],
+    templateUrl: '
+  <div >
+    <h2>Child</h2>
+    <button (click)="handleClick()">Send data to parent</button>
+  </div>
+'
+})
+export class ChildComponent implements OnInit {
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    @Output() dataFromChildEvent = new EventEmitter<string>()
 
-## Build
+    handleClick() {
+        this.dataFromChildEvent.emit("I'm a Data from child and displayed in parent")
+    }
+}
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+@Component({
+    selector: 'app-parent',
+    standalone: true,
+    imports: [ChildComponent],
+    templateUrl: '
+  <div>
+      <h1>Parent Component</h1>
+      <p>{{ dataFromChild }}</p>
+  </div>
+'
+})
+export class ParentComponent implements AfterViewInit {
 
-## Running end-to-end tests
+    public dataFromChild: string = ''
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+    handleDataFromChild($event: string) {
+        this.dataFromChild = $event
+    }
+}
+```
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-
-# angular_share_data_between_components
