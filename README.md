@@ -82,7 +82,7 @@ export class ParentComponent implements AfterViewInit {
 ```
 
 
-## From a Service to any component (
+## From a Service to any component 
 ### Behavior Subject version
 
 ```
