@@ -13,10 +13,11 @@
       <app-child [dataFromParent]="dataFromParent"> </app-child>
   </div>
   '
-  })
-  export class ParentComponent {
-    protected dataFromParent: string = "I'm a Data from parent and displayed in child"
-  }
+})
+
+export class ParentComponent {
+  protected dataFromParent: string = "I'm a Data from parent and displayed in child"
+}
 ```
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
