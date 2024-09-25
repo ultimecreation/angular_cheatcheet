@@ -1,8 +1,25 @@
-# DataSharing
+# angular_share_data_between_components
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.5.
+## From parent to child
 
-## Development server
+- in Parent Component
+
+` @Component({
+selector: 'app-parent',
+standalone: true,
+imports: [ChildComponent],
+templateUrl: '
+
+<div style="background-color: burlywood">
+    <h1>Parent Component</h1>
+    <app-child [dataFromParent]="dataFromParent"> </app-child>
+</div>
+'
+})
+export class ParentComponent {
+    protected dataFromParent: string = "I'm a Data from parent and displayed in child"
+}
+`
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
@@ -25,4 +42,5 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
 # angular_share_data_between_components
