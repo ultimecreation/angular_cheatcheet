@@ -2,15 +2,12 @@
 
 ## From parent to child
 
-- in Parent Component
-
 ```
 @Component({
     selector: 'app-parent',
     standalone: true,
     imports: [ChildComponent],
     templateUrl: '
-    
     <div style="background-color: burlywood">
         <h1>Parent Component</h1>
         <app-child [dataFromParent]="dataFromParent"> </app-child>
