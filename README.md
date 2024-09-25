@@ -118,6 +118,15 @@ export class AuthBehaviorService {
         <h2>Child sibling</h2>
         <button (click)="login()">Bs Login</button>
         <button (click)="logout()">Bs Logout</button>
+
+         <div>
+            <h3>Data from Behavior Subject</h3>
+        
+            <p>User : {{ userBS.username }}</p>
+            <p>
+              {{ userBS.isLogged ? "Logged In" : "Logged Out" }}
+            </p>
+        </div>
     </div>
 '
 })
