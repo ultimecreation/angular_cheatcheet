@@ -34,6 +34,7 @@ export class ChildComponent implements OnInit {
 ```
 
 ## From child to Parent
+### Event emitter version
 
 ```
 @Component({
@@ -80,6 +81,50 @@ export class ParentComponent implements AfterViewInit {
     }
 }
 ```
+
+
+### @ViewChild version
+
+```
+@Component({
+    selector: 'app-child',
+    standalone: true,
+    imports: [],
+    templateUrl: './child.component.html'
+})
+export class ChildComponent implements OnInit {
+    private childData = "I'm a Data of child accessed by parent through @ViewChild"
+}
+
+
+
+
+@Component({
+    selector: 'app-parent',
+    standalone: true,
+    imports: [],
+    templateUrl: '
+    <div style="background-color: burlywood">
+      <h1>Parent Component</h1>
+    
+      <h2>Data accessed trough child view</h2>
+      <p>{{ dataAccessedByParentThroughViewChild }}</p>
+    </div>
+
+'
+})
+export class ParentComponent implements AfterViewInit {
+    protected dataAccessedByParentThroughViewChild: string | undefined;
+
+    @ViewChild(ChildComponent) child: any;
+
+    ngAfterViewInit(): void {
+        this.dataAccessedByParentThroughViewChild = this.child.childData
+    }
+}
+
+```
+
 
 
 ## From a Service to any component 
