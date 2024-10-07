@@ -30,7 +30,11 @@ export class ParentComponent {
   <p>{{ dataFromParent }}</p>'
 })
 export class ChildComponent implements OnInit {
+    // option 1
     @Input() dataFromParent: string = ''
+
+    // option 2 using lowercase input()
+    dataFromParent = input()
 ```
 
 ## From child to Parent
