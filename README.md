@@ -20,9 +20,9 @@
 
   ```
 
-  - component.ts
+- component.ts
  
-    ```
+```
 
       import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
       
@@ -81,7 +81,7 @@
         }
     }
 
-
+```
 
     ```
 
