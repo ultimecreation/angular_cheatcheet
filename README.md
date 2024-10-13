@@ -1,4 +1,92 @@
-# angular_share_data_between_components
+# angular_share_data_between_components and Http requests
+
+## HTTP requests
+- component.html
+
+  ```
+  <app-places-container title="Your Favorite Places">
+    @if (error()) {
+      <p class="fallback-text">
+        {{ error() }}
+      </p>
+    } @if (isFetching()) {
+      <p class="fallback-text">Fetching places.....</p>
+    } @if (places()) {
+      <app-places [places]="places()!" />
+    } @else if (places()?.length === 0) {
+      <p class="fallback-text">Unfortunately, no places could be found.</p>
+    }
+  </app-places-container>
+
+  ```
+
+  - component.ts
+ 
+    ```
+
+      import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+      
+      import { PlacesContainerComponent } from '../places-container/places-container.component';
+      import { PlacesComponent } from '../places.component';
+      import { Place } from '../place.model';
+      import { HttpClient } from '@angular/common/http';
+      import { catchError, map, throwError } from 'rxjs';
+      
+      @Component({
+          selector: 'app-user-places',
+          standalone: true,
+          templateUrl: './user-places.component.html',
+          styleUrl: './user-places.component.css',
+          imports: [PlacesContainerComponent, PlacesComponent],
+      })
+      export class UserPlacesComponent implements OnInit {
+    
+    
+        places = signal<Place[] | undefined>(undefined);
+        isFetching = signal(false)
+        error = signal('')
+    
+        private httpClient = inject(HttpClient);
+        private destroyRef = inject(DestroyRef);
+    
+    
+        ngOnInit(): void {
+            this.isFetching.set(true)
+            const subscription = this.httpClient.get<{ places: Place[] }>('http://localhost:3000/user-places')
+                .pipe(
+                    map(resData => resData.places),
+                    catchError((err) => {
+                        console.log(err)
+                        return throwError(() => new Error('Unable to fetch data'))
+                    })
+                ).subscribe({
+                    next: (places) => {
+                        this.places.set(places)
+                        console.log(places)
+                        // console.log(response.body?.places)
+                    },
+                    complete: () => {
+                        this.isFetching.set(false)
+                    },
+                    error: (err) => {
+                        this.error.set(err.message)
+                        this.isFetching.set(false)
+    
+                    }
+                })
+    
+            this.destroyRef.onDestroy(() => {
+                subscription.unsubscribe()
+            })
+        }
+    }
+
+
+
+    ```
+
+
+
 
 ## From parent to child
 
