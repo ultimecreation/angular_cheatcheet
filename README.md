@@ -1,5 +1,68 @@
 # angular_share_data_between_components and Http requests
 
+
+## custom validators and asyncValidators
+
+
+- component.ts
+ 
+```
+    import { Component } from '@angular/core';
+    import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
+    import { of } from 'rxjs';
+    
+    function containsQuestionMark(control: AbstractControl) {
+        if (control.value.includes('?')) return null
+        return { doesNotContainQuestionMark: true }
+    }
+    
+    function emailIsUnique(control: AbstractControl) {
+        // DO SOME HTTP REQUEST AND DB CALLS TO RETURN AT THE END AN OBSERVABLE
+        if (control.value !== 'test@test.com') return of(null)
+        return of({ emailExists: true })
+    
+    }
+    @Component({
+        selector: 'app-login',
+        standalone: true,
+        templateUrl: './login.component.html',
+        styleUrl: './login.component.css',
+        imports: [ReactiveFormsModule]
+    })
+    export class LoginComponent {
+        form = new FormGroup({
+            email: new FormControl('', {
+                validators: [Validators.required, Validators.email],
+                asyncValidators: [emailIsUnique]
+            }),
+            password: new FormControl('', {
+                validators: [
+                    Validators.required,
+                    Validators.minLength(4),
+                    containsQuestionMark
+                ]
+            })
+        })
+    
+        get emailIsInvalid() {
+            return (this.form.controls.email.touched
+                && this.form.controls.email.dirty
+                && this.form.controls.email.invalid)
+        }
+        get passwordIsInvalid() {
+            return (this.form.controls.password.touched
+                && this.form.controls.password.dirty
+                && this.form.controls.password.invalid)
+        }
+        handleLogin() {
+            console.log(this.form)
+        }
+    }
+
+
+```
+
+
 ## HTTP requests
 - component.html
 
